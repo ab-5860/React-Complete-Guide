@@ -1,4 +1,5 @@
 import './ExpenseDetails.css';
+import Card from './Card';
 
 function ExpenseDetails(props)
 {
@@ -7,11 +8,14 @@ function ExpenseDetails(props)
     const location = props.location;
 
     return (
-        <div>
-        <h2>{title} </h2>
-        <div className = "expense-item__price">${amount} </div>
-        <h3 className="expense-item_description">{location}</h3>
-        </div>
+        // <Card className = "expense-item">
+        <>
+                <h2>{title} </h2>
+                <div className = "expense-item__price">${amount} </div>
+                <h3 className="expense-item_description">{location}</h3>
+        </>
+
+        // </Card>
     )
     
 }
