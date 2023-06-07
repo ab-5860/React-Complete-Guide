@@ -1,7 +1,7 @@
-import ExpenseItem from "./component/Expenses/ExpenseItem";
-import React, {useState} from "react";
+import React, { useState } from "react";
 import NewExpense from "./component/NewExpense/NewExpense";
 import ExpensesFilter from "./component/Expenses/ExpenseFilter";
+import ExpenseList from "./component/Expenses/ExpenseList";
 
 const dummy_expenses = [
   {
@@ -34,22 +34,18 @@ const dummy_expenses = [
   },
 ];
 
-
 const App = () => {
+  const [expenses, setExpenses] = useState(dummy_expenses);
 
+  const [filteredYear, setFilteredYear] = useState("2020");
 
-      const [expenses, setExpenses] = useState(dummy_expenses);
+  const filterChangeHandler = (selectedYear) => {
+    setFilteredYear(selectedYear);
+  };
 
-      const [filteredYear, setFilteredYear] = useState('2020');
-
-      const filterChangeHandler = selectedYear => {
-        setFilteredYear(selectedYear);
-      };
-
-      const filteredExpenses = expenses.filter(expense => {
-          return expense.date.getFullYear().toString() === filteredYear;
-      });
-  
+  const filteredExpenses = expenses.filter((expense) => {
+    return expense.date.getFullYear().toString() === filteredYear;
+  });
 
   //   return React.createElement('div', null,
   //   React.createElement('h2', null, "Let's get started!"),
@@ -64,30 +60,26 @@ const App = () => {
   //   )
   // );
 
-  const addExpenseHandler = (expense) =>
-  {
-      setExpenses((prevExpenses) => {
-        return [...prevExpenses, expense];
-      })
-  }
+  const addExpenseHandler = (expense) => {
+    setExpenses((prevExpenses) => {
+      return [...prevExpenses, expense];
+    });
+  };
+
+ 
 
   return (
     <div>
       <h2>Let's get started!</h2>
-      
-      <NewExpense onAddExpense={addExpenseHandler}/>
-      <ExpensesFilter selected={filteredYear} onChangeFilter={filterChangeHandler} />
-      {filteredExpenses.map((expense) => (
-        <ExpenseItem
-          key={expense.id}
-          title={expense.title}
-          amount={expense.amount}
-          date={expense.date}
-          location={expense.location}
-        />
-      ))}
+
+      <NewExpense onAddExpense={addExpenseHandler} />
+      <ExpensesFilter
+        selected={filteredYear}
+        onChangeFilter={filterChangeHandler}
+      />
+      <ExpenseList items = {filteredExpenses}/>
     </div>
   );
-}
+};
 
 export default App;
